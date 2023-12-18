@@ -23,12 +23,13 @@ namespace laba2
         }
 
         // Method when player win
-        public void WinGame(string opponentName, int rating)
+        public void WinGame(string opponentName, Game game)
         {
+            int rating = Points(game.getPlayRating(this));
             GamesCount++;
             CurrentRating += rating;
-            VictorySeries++;
             gameHistory.Add(new GameResult(opponentName, true, rating));
+            VictorySeries++;
         }
 
         public void WinGame(string opponentName)
@@ -39,11 +40,12 @@ namespace laba2
         }
 
         // Method when player lose
-        public void LoseGame(string opponentName, int rating)
+        public void LoseGame(string opponentName, Game game)
         {
+            VictorySeries = 0;
+            int rating = Points(game.getPlayRating(this));
             GamesCount++;
             CurrentRating -= rating;
-            VictorySeries = 0;
             gameHistory.Add(new GameResult(opponentName, false, rating));
         }
 
@@ -94,7 +96,7 @@ namespace laba2
     {
         public override int Points(int rating)
         {
-            return rating = rating * (1 + VictorySeries);
+            return rating *= (1 + VictorySeries);
         }
     }
 }

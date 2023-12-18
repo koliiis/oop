@@ -38,7 +38,7 @@ namespace laba2
                 Play();
                 return;
             }
-
+            playRating = rating;
             // Creation object for generating random numbers
             Random random = new Random();
             int player1Roll = random.Next(1, 7);
@@ -49,16 +49,16 @@ namespace laba2
             // Who win and update stats
             if (player1Roll > player2Roll)
             {
-                Player1.WinGame(Player2.UserName, rating);
-                Player2.LoseGame(Player1.UserName, rating);
+                Player1.WinGame(Player2.UserName, this);
+                Player2.LoseGame(Player1.UserName, this);
                 Console.WriteLine($"Переміг {Player1.UserName}!");
                 Player1.GetStats();
                 Player2.GetStats();
             }
             else if (player1Roll < player2Roll)
             {
-                Player2.WinGame(Player1.UserName, rating);
-                Player1.LoseGame(Player2.UserName, rating);
+                Player2.WinGame(Player1.UserName, this);
+                Player1.LoseGame(Player2.UserName, this);
                 Console.WriteLine($"Переміг {Player2.UserName}!");
                 Player1.GetStats();
                 Player2.GetStats();

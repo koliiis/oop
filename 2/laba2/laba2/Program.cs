@@ -25,19 +25,26 @@ namespace Laba2
 
         private static GameAccount ChoseAccount()
         {
-            Console.WriteLine("\nВиберіть метод гри: ");
+            Console.WriteLine("\nВиберіть тип акаунту: ");
             Console.WriteLine("1. Стандартний акаунт.");
-            Console.WriteLine("2. Легкий програш.");
+            Console.WriteLine("2. аккаунт, у якого змніюється рейтинг/2.");
             Console.WriteLine("3. Додаткові бали за низку перемог.\n");
             int temp = Convert.ToInt32(Console.ReadLine());
-            if (temp == 1)
-                return new GameAccount();
-            if (temp == 2)
-                return new EasyLoss();
-            if (temp == 3)
-                return new SeriesOfVictory();
-            else
-                Console.WriteLine("\nТакого методу нема :(");
+            switch (temp)
+            {
+                case 1:
+                    return new GameAccount();
+                    break;
+                case 2:
+                    return new EasyLoss();
+                    break;
+                case 3:
+                    return new SeriesOfVictory();
+                    break;
+                default:
+                    Console.WriteLine("\nТакого методу нема :(");
+                    break;
+            }
             return ChoseAccount();
         }
 
@@ -49,14 +56,21 @@ namespace Laba2
             Console.WriteLine("3) гра, у якій один гравець грає на рейтинг;\n");
             int temp = Convert.ToInt32(Console.ReadLine());
             GameFactory gameFactory = new GameFactory();
-            if (temp == 1)
-                return gameFactory.CreateGame(player1, player2);
-            if (temp == 2)
-                return gameFactory.CreateGameWithoutRating(player1, player2);
-            if (temp == 3)
-                return gameFactory.CreateGameOnePlayerRating(player1, player2);
-            else
-                Console.WriteLine("\nВведене некоректне значення!");
+            switch (temp)
+            {
+                case 1:
+                    return gameFactory.CreateGame(player1, player2);
+                    break;
+                case 2:
+                    return gameFactory.CreateGameWithoutRating(player1, player2);
+                    break;
+                case 3:
+                    return gameFactory.CreateGameOnePlayerRating(player1, player2);
+                    break;
+                default:
+                    Console.WriteLine("\nВведене некоректне значення!");
+                    break;
+            }
             return TypeOfGame(player1, player2);
         }
     }
