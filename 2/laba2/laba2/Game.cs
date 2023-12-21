@@ -6,18 +6,26 @@ using System.Threading.Tasks;
 
 namespace laba2
 {
+    // Клас для представлення гри
     public class Game
     {
+        // Властивість - перший гравець
         public GameAccount Player1 { get; set; }
+
+        // Властивість - другий гравець
         public GameAccount Player2 { get; set; }
+
+        // Властивість - рейтинг для гри
         public int playRating { get; set; } = 0;
+
+        // Конструктор класу гри
         public Game(GameAccount player1, GameAccount player2)
         {
             this.Player1 = player1;
             this.Player2 = player2;
         }
 
-        // Method to play game
+        // Метод для проведення гри
         public virtual void Play()
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -31,7 +39,7 @@ namespace laba2
                 return;
             }
 
-            // Check if rating is enough
+            // Перевірка, чи є достатньо рейтингу
             if (rating > Player1.CurrentRating - 1 || rating > Player2.CurrentRating - 1)
             {
                 Console.WriteLine("У одного з гравців недостатньо рейтингу.");
@@ -39,14 +47,15 @@ namespace laba2
                 return;
             }
             playRating = rating;
-            // Creation object for generating random numbers
+
+            // Створення об'єкта для генерації випадкових чисел
             Random random = new Random();
             int player1Roll = random.Next(1, 7);
             int player2Roll = random.Next(1, 7);
             Console.WriteLine($"{Player1.UserName} кинув кубик і випало {player1Roll}");
             Console.WriteLine($"{Player2.UserName} кинув кубик і випало {player2Roll}");
 
-            // Who win and update stats
+            // Визначення переможця та оновлення статистики
             if (player1Roll > player2Roll)
             {
                 Player1.WinGame(Player2.UserName, this);
@@ -68,7 +77,7 @@ namespace laba2
                 Console.WriteLine("Нічия");
             }
 
-            // Another game?
+            // Ще одна гра?
             Console.WriteLine("\n###################################\n");
             Console.Write("Хочете зіграти ще одну гру? (Так/Ні): ");
             string playAgainResponse = Console.ReadLine().Trim();
@@ -79,22 +88,25 @@ namespace laba2
                 playAgain = false;
             }
             if (playAgain) Play();
-
         }
+
+        // Віртуальний метод для отримання рейтингу гравця
         public virtual int getPlayRating(GameAccount player) { return playRating; }
-        
-        // Method to start game
+
+        // Метод для початку гри
         public virtual void StartGame()
         {
             Console.WriteLine("Вітаємо у грі!\n");
 
+            // Введення імені першого гравця
             Console.Write("Введіть ім'я першого гравця: ");
             Player1.UserName = Console.ReadLine().Trim();
 
+            // Введення імені другого гравця
             Console.Write("Введіть ім'я другого гравця: ");
             Player2.UserName = Console.ReadLine().Trim();
 
-            // Write start rating
+            // Введення початкового рейтингу
             Console.Write("\nВведіть стартовий рейтинг: ");
             int startRating;
             while (!int.TryParse(Console.ReadLine(), out startRating) || startRating <= 0)
@@ -105,6 +117,7 @@ namespace laba2
             Player1.CurrentRating = startRating;
             Player2.CurrentRating = startRating;
 
+            // Початок гри
             Play();
         }
     }

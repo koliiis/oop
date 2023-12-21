@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 
 namespace laba2
 {
+    // Клас для зберігання результатів гри
     public class GameResult
     {
+        // Властивість - ім'я опонента
         public string OpponentName { get; }
+
+        // Властивість - чи виграв гравець гру
         public bool Won { get; }
+
+        // Властивість - зміна рейтингу
         public int RatingChange { get; }
 
-        // Class constructor
+        // Конструктор класу
         public GameResult(string opponentName, bool won, int ratingChange)
         {
             OpponentName = opponentName;
@@ -20,6 +26,7 @@ namespace laba2
             RatingChange = ratingChange;
         }
 
+        // Додатковий конструктор без зміни рейтингу
         public GameResult(string opponentName, bool won)
         {
             OpponentName = opponentName;

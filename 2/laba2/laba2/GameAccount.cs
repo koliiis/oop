@@ -7,22 +7,32 @@ using System.Threading.Tasks;
 
 namespace laba2
 {
+    // Клас для представлення гравця в грі
     public class GameAccount
     {
+        // Властивість - ім'я гравця
         public string UserName { get; set; }
+
+        // Властивість - поточний рейтинг гравця
         public int CurrentRating { get; set; }
+
+        // Приватне поле - історія ігор гравця
         private List<GameResult> gameHistory;
+
+        // Властивість - кількість зіграних ігор
         public int GamesCount { get; set; }
+
+        // Властивість - серія перемог гравця
         public int VictorySeries { get; set; } = 0;
 
-        // Class constructor
+        // Конструктор класу
         public GameAccount(int gamesCount = 0)
         {
             GamesCount = gamesCount;
             gameHistory = new List<GameResult>();
         }
 
-        // Method when player win
+        // Метод, що викликається при перемозі гравця
         public void WinGame(string opponentName, Game game)
         {
             int rating = Points(game.getPlayRating(this));
@@ -32,6 +42,7 @@ namespace laba2
             VictorySeries++;
         }
 
+        // Перевантажений метод для випадку перемоги без рейтингу
         public void WinGame(string opponentName)
         {
             GamesCount++;
@@ -39,7 +50,7 @@ namespace laba2
             gameHistory.Add(new GameResult(opponentName, true));
         }
 
-        // Method when player lose
+        // Метод, що викликається при програші гравця
         public void LoseGame(string opponentName, Game game)
         {
             VictorySeries = 0;
@@ -49,6 +60,7 @@ namespace laba2
             gameHistory.Add(new GameResult(opponentName, false, rating));
         }
 
+        // Перевантажений метод для випадку програшу без рейтингу
         public void LoseGame(string opponentName)
         {
             GamesCount++;
@@ -56,7 +68,7 @@ namespace laba2
             gameHistory.Add(new GameResult(opponentName, false));
         }
 
-        // Method to get statistic for player
+        // Метод для отримання статистики гравця
         public void GetStats()
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -79,21 +91,27 @@ namespace laba2
                               $"Кількість ігор: {GamesCount}\n");
         }
 
+        // Віртуальний метод для обчислення балів гравця
         public virtual int Points(int rating)
         {
             return rating;
         }
     }
 
+    // Клас для представлення гравця з половинною втратою рейтингу при програші
     public class EasyLoss : GameAccount
     {
+        // Перевизначений метод для обчислення балів гравця з половинною втратою рейтингу
         public override int Points(int rating)
         {
             return rating /= 2;
         }
     }
+
+    // Клас для представлення гравця з більшими балами за низку перемог
     public class SeriesOfVictory : GameAccount
     {
+        // Перевизначений метод для обчислення балів гравця з урахуванням серії перемог
         public override int Points(int rating)
         {
             return rating *= (1 + VictorySeries);
