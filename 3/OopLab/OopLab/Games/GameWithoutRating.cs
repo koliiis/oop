@@ -10,14 +10,18 @@ using OopLab.Services;
 
 namespace Aloop
 {
+    // Клас GameWithoutRating успадковує функціональність базового класу Game і визначає гру без рейтингу.
     public class GameWithoutRating : Game
     {
+        // Конструктор класу, який викликає конструктор базового класу та ініціалізує гравців та сервіс гри.
         public GameWithoutRating(GameAccount Player1, GameAccount Player2, GameService service) : base(Player1, Player2, service)
         {
             this.Player1 = Player1;
             this.Player2 = Player2;
             _service = service;
         }
+
+        // Метод для початку гри без рейтингу.
         override public void StartGame()
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -30,20 +34,24 @@ namespace Aloop
             Console.Write("Введіть ім'я другого гравця: ");
             Player2.UserName = Console.ReadLine().Trim();
 
-            
             // Початок гри.
             Play();
         }
+
+        // Метод для проведення гри без рейтингу.
         override public void Play()
         {
             Player1.CurrentRating = 0;
             Player2.CurrentRating = 0;
+
             // Симуляція кидання кубиків і визначення переможця.
             Random random = new Random();
             int Player1Roll = random.Next(1, 7);
             int Player2Roll = random.Next(1, 7);
             Console.WriteLine($"{Player1.UserName} кинув кубик і випало {Player1Roll}");
             Console.WriteLine($"{Player2.UserName} кинув кубик і випало {Player2Roll}");
+
+            // Логіка визначення переможця та виведення результатів гри.
             if (Player1Roll > Player2Roll)
             {
                 Player1.Win(Player2.UserName);
@@ -52,7 +60,7 @@ namespace Aloop
                 Player1.GetStatsWithoutRating();
                 Player2.GetStatsWithoutRating();
             }
-            if (Player1Roll < Player2Roll)
+            else if (Player1Roll < Player2Roll)
             {
                 Player2.Win(Player1.UserName);
                 Player1.Lose(Player2.UserName);
@@ -60,7 +68,7 @@ namespace Aloop
                 Player1.GetStatsWithoutRating();
                 Player2.GetStatsWithoutRating();
             }
-            if (Player1Roll == Player2Roll)
+            else
             {
                 Player1.draw(Player2.UserName);
                 Player2.draw(Player1.UserName);

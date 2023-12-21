@@ -12,44 +12,64 @@ using System.Threading.Tasks;
 
 namespace OopLab.Services
 {
+    // Клас, який реалізує сервіс для обробки облікових записів гри
     public class GameAccountService : IGameAccountService
     {
+        // Репозиторій для доступу до бази даних
         GameAccountRepository repository;
+
+        // Конструктор, приймає контекст бази даних та ініціалізує репозиторій
         public GameAccountService(DbContext context)
         {
             repository = new GameAccountRepository(context);
         }
+
+        // Метод для додавання результатів гри до облікового запису
         public void AddGameResult(GameResult gameResult, GameAccount entity)
         {
             repository.AddGameResult(MapGameResult(gameResult), Map(entity));
         }
+
+        // Метод для створення нового облікового запису
         public void Create(GameAccount entity)
         {
             repository.Create(Map(entity));
         }
+
+        // Метод для видалення облікового запису
         public void Delete(GameAccount entity)
         {
             repository.Delete(Map(entity));
         }
+
+        // Метод для отримання всіх облікових записів
         public List<GameAccount> GetAll()
         {
             var list = repository.GetAll()
-            .Select(x => x != null ? Map(x) : null)
-            .ToList();
+                .Select(x => x != null ? Map(x) : null)
+                .ToList();
             return list;
         }
+
+        // Метод для отримання облікового запису за його ідентифікатором
         public GameAccount GetById(int id)
         {
             return Map(repository.GetById(id));
         }
+
+        // Метод для отримання історії результатів гри для певного облікового запису
         public List<GameResult> GetHistory(GameAccount entity)
         {
             return MapGameResults(repository.GetHistory(Map(entity)));
         }
+
+        // Метод для оновлення облікового запису
         public void Update(GameAccount entity)
         {
             repository.Update(Map(entity));
         }
+
+        // Приватний метод для відображення об'єкту GameAccountEntity на GameAccount
         private GameAccount Map(GameAccountEntity gameAccount)
         {
             return new GameAccount(this, gameAccount.Id)
@@ -62,6 +82,8 @@ namespace OopLab.Services
                 GameHistory = MapGameResults(gameAccount.GameHistory)
             };
         }
+
+        // Інші приватні методи для відображення різних типів об'єктів
         private List<GameResult> MapGameResults(List<GameResultEntity> gameResultEntities)
         {
             List<GameResult> gameResults = new List<GameResult>();
