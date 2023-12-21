@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using OopLab.DB.Entity;
-using OopLab.Services;
+using OopLab.Services.Base;
 
 namespace OopLab.Games
 {
@@ -17,12 +17,14 @@ namespace OopLab.Games
         public GameAccount Player2 { get; set; }
         public GameAccount Winner { get; set; }
         public int playRating { get; set; } = 0;
-        public GameService _service { get; set; }
-        public Game(GameAccount Player1, GameAccount Player2, GameService service)
+        public IGameService _service { get; set; }
+        public int Indicator { get; set; }
+        public Game(GameAccount Player1, GameAccount Player2, IGameService service, int indicator=0)
         {
             this.Player1 = Player1;
             this.Player2 = Player2;
             _service = service;
+            Indicator = indicator;
         }
 
         public virtual int getPlayRating(GameAccount player) { return playRating; }
@@ -38,6 +40,17 @@ namespace OopLab.Games
 
             Console.Write("Введіть ім'я другого гравця: ");
             Player2.UserName = Console.ReadLine().Trim();
+
+            Console.Write("\nВведіть початковий рейтинг: ");
+            int startRating = Convert.ToInt32(Console.ReadLine());
+            while (startRating <= 0)
+            {
+                Console.WriteLine("Початковий рейтинг повинен бути більше 0");
+                Console.Write("Введіть початковий рейтинг: ");
+                startRating = Convert.ToInt32(Console.ReadLine());
+            }
+            Player1.CurrentRating = startRating;
+            Player2.CurrentRating = startRating;
 
             Play();
         }

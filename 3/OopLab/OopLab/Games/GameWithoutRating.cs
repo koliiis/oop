@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using OopLab;
 using OopLab.DB.Entity;
 using OopLab.Games;
-using OopLab.Services;
+using OopLab.Services.Base;
 
 namespace Aloop
 {
     public class GameWithoutRating : Game
     {
-        public GameWithoutRating(GameAccount Player1, GameAccount Player2, GameService service) : base(Player1, Player2, service)
+        public GameWithoutRating(GameAccount Player1, GameAccount Player2, IGameService service, int indicator = 2) : base(Player1, Player2, service, indicator)
         {
             this.Player1 = Player1;
             this.Player2 = Player2;
@@ -30,7 +30,7 @@ namespace Aloop
             Console.Write("Введіть ім'я другого гравця: ");
             Player2.UserName = Console.ReadLine().Trim();
 
-            
+
             // Початок гри.
             Play();
         }
@@ -49,16 +49,16 @@ namespace Aloop
                 Player1.Win(Player2.UserName);
                 Player2.Lose(Player1.UserName);
                 Console.WriteLine($"Переміг {Player1.UserName}!");
-                Player1.GetStatsWithoutRating();
-                Player2.GetStatsWithoutRating();
+                Player1.GetStats();
+                Player2.GetStats();
             }
             if (Player1Roll < Player2Roll)
             {
                 Player2.Win(Player1.UserName);
                 Player1.Lose(Player2.UserName);
                 Console.WriteLine($"Переміг {Player2.UserName}!");
-                Player1.GetStatsWithoutRating();
-                Player2.GetStatsWithoutRating();
+                Player1.GetStats();
+                Player2.GetStats();
             }
             if (Player1Roll == Player2Roll)
             {

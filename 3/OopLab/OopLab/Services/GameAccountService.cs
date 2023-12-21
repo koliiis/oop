@@ -1,9 +1,8 @@
 ﻿using Lecture_23_10_2023_Alt.DB.Entity.GameAccounts;
-using OopLab;
 using OopLab.DB;
 using OopLab.DB.Entity;
 using OopLab.DB.Repositories;
-using OopLab.Services.Abstracts;
+using OopLab.Services.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +39,8 @@ namespace OopLab.Services
         }
         public GameAccount GetById(int id)
         {
-            return Map(repository.GetById(id));
+            GameAccount acc = Map(repository.GetById(id));
+            return acc;
         }
         public List<GameResult> GetHistory(GameAccount entity)
         {
@@ -52,14 +52,75 @@ namespace OopLab.Services
         }
         private GameAccount Map(GameAccountEntity gameAccount)
         {
-            return new GameAccount(this, gameAccount.Id)
+            if (gameAccount.Indicator == 0)
             {
-                _service = this,
+                return new GameAccount(this, gameAccount.Id)
+                {
+                    _service = this,
+                    Id = gameAccount.Id,
+                    UserName = gameAccount.UserName,
+                    CurrentRating = gameAccount.CurrentRating,
+                    GamesCount = gameAccount.GamesCount,
+                    GameHistory = MapGameResults(gameAccount.GameHistory),
+                    Indicator = gameAccount.Indicator,
+                };
+            }
+            else if (gameAccount.Indicator == 1)
+            {
+                return new AccountHalfRating(this, gameAccount.Id)
+                {
+                    _service = this,
+                    Id = gameAccount.Id,
+                    UserName = gameAccount.UserName,
+                    CurrentRating = gameAccount.CurrentRating,
+                    GamesCount = gameAccount.GamesCount,
+                    GameHistory = MapGameResults(gameAccount.GameHistory),
+                    Indicator = gameAccount.Indicator,
+                };
+            }
+            else
+            {
+                return new AccountWithStreek(this, gameAccount.Id)
+                {
+                    _service = this,
+                    Id = gameAccount.Id,
+                    UserName = gameAccount.UserName,
+                    CurrentRating = gameAccount.CurrentRating,
+                    GamesCount = gameAccount.GamesCount,
+                    GameHistory = MapGameResults(gameAccount.GameHistory),
+                    Indicator = gameAccount.Indicator,
+                };
+            }
+        }
+
+        private GameAccountEntity Map(GameAccount gameAccount)
+        {
+            if (gameAccount == null)
+            {
+                return null;
+            }
+            return new GameAccountEntity
+            {
                 Id = gameAccount.Id,
                 UserName = gameAccount.UserName,
                 CurrentRating = gameAccount.CurrentRating,
                 GamesCount = gameAccount.GamesCount,
-                GameHistory = MapGameResults(gameAccount.GameHistory)
+                GameHistory = MapGameResults(gameAccount.GameHistory),
+                Indicator = gameAccount.Indicator,
+            };
+        }
+        private GameResultEntity MapGameResult(GameResult gameResult)
+        {
+            if (gameResult == null)
+            {
+                return null;
+            }
+
+            return new GameResultEntity
+            {
+                OpponentName = gameResult.OpponentName,
+                Won = gameResult.Won,
+                RatingChange = gameResult.RatingChange
             };
         }
         private List<GameResult> MapGameResults(List<GameResultEntity> gameResultEntities)
@@ -80,35 +141,6 @@ namespace OopLab.Services
             }
 
             return gameResults;
-        }
-        private GameAccountEntity Map(GameAccount gameAccount)
-        {
-            if (gameAccount == null)
-            {
-                return null;
-            }
-            return new GameAccountEntity
-            {
-                Id = gameAccount.Id,
-                UserName = gameAccount.UserName,
-                CurrentRating = gameAccount.CurrentRating,
-                GamesCount = gameAccount.GamesCount,
-                GameHistory = MapGameResults(gameAccount.GameHistory)
-            };
-        }
-        private GameResultEntity MapGameResult(GameResult gameResult)
-        {
-            if (gameResult == null)
-            {
-                return null;
-            }
-
-            return new GameResultEntity
-            {
-                OpponentName = gameResult.OpponentName,
-                Won = gameResult.Won,
-                RatingChange = gameResult.RatingChange
-            };
         }
         private List<GameResultEntity> MapGameResults(List<GameResult> gameResults)
         {
@@ -132,69 +164,5 @@ namespace OopLab.Services
             return gameResultEntities;
         }
 
-        private AccountHalfRating Map(AccountHalfRatingEntity gameAccount)
-        {
-            if (gameAccount == null)
-            {
-                return null;
-            }
-            return new AccountHalfRating(this, gameAccount.Id)
-            {
-                _service = this,
-                Id = gameAccount.Id,
-                UserName = gameAccount.UserName,
-                CurrentRating = gameAccount.CurrentRating,
-                GamesCount = gameAccount.GamesCount,
-                GameHistory = MapGameResults(gameAccount.GameHistory)
-            };
-        }
-
-        private AccountHalfRatingEntity Map(AccountHalfRating gameAccount)
-        {
-            if (gameAccount == null)
-            {
-                return null;
-            }
-            return new AccountHalfRatingEntity
-            {
-                Id = gameAccount.Id,
-                UserName = gameAccount.UserName,
-                CurrentRating = gameAccount.CurrentRating,
-                GamesCount = gameAccount.GamesCount,
-                GameHistory = MapGameResults(gameAccount.GameHistory)
-            };
-        }
-        private AccountWithStreek Map(AccountWithStreekEntity gameAccount)
-        {
-            if (gameAccount == null)
-            {
-                return null;
-            }
-            return new AccountWithStreek(this, gameAccount.Id)
-            {
-                _service = this,
-                Id = gameAccount.Id,
-                UserName = gameAccount.UserName,
-                CurrentRating = gameAccount.CurrentRating,
-                GamesCount = gameAccount.GamesCount,
-                GameHistory = MapGameResults(gameAccount.GameHistory)
-            };
-        }
-
-        private AccountWithStreekEntity Map(AccountWithStreek gameAccount)
-        {
-            if (gameAccount == null)
-            {
-                return null;
-            }
-            return new AccountWithStreekEntity
-            {
-                Id = gameAccount.Id,
-                UserName = gameAccount.UserName,
-                CurrentRating = gameAccount.CurrentRating,
-                GamesCount = gameAccount.GamesCount,
-                GameHistory = MapGameResults(gameAccount.GameHistory)
-            };
-        }
     }
 }

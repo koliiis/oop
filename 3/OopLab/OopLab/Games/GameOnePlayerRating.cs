@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using OopLab;
 using OopLab.DB.Entity;
 using OopLab.Games;
-using OopLab.Services;
+using OopLab.Services.Base;
 
 namespace Aloop
 {
@@ -15,7 +15,7 @@ namespace Aloop
     {
         int playRating1 { get; set; }
         int playRating2 { get; set; }
-        public GameOnePlayerRating(GameAccount Player1, GameAccount Player2, GameService service) : base(Player1, Player2, service)
+        public GameOnePlayerRating(GameAccount Player1, GameAccount Player2, IGameService service, int indicator = 1) : base(Player1, Player2, service, indicator)
         {
             this.Player1 = Player1;
             this.Player2 = Player2;
@@ -24,8 +24,8 @@ namespace Aloop
 
         public override int getPlayRating(GameAccount player)
         {
-            if (player.UserName == Player1.UserName) {  return playRating1; }
-            if (player.UserName == Player2.UserName) {  return playRating2; }
+            if (player.UserName == Player1.UserName) { return playRating1; }
+            if (player.UserName == Player2.UserName) { return playRating2; }
             return 0;
         }
         override public void StartGame()
@@ -110,13 +110,13 @@ namespace Aloop
             if (temp == 1)
             {
                 playRating1 = 0; playRating2 = playRating;
-                
+
                 return;
             }
             if (temp == 2)
             {
                 playRating2 = 0; playRating1 = playRating;
-               
+
                 return;
             }
 

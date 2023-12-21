@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OopLab.Services.Abstracts
+namespace OopLab.Services.Base
 {
     public interface IGameAccountService
     {

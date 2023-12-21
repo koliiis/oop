@@ -13,5 +13,6 @@ namespace OopLab.DB.Entity
         public int CurrentRating { get; set; } // Поточний рейтинг гравця
         public int GamesCount { get; set; } = 0; // Кількість ігор гравця
         public List<GameResultEntity> GameHistory { get; set; }
+        public int Indicator { get; set; }
     }
 }

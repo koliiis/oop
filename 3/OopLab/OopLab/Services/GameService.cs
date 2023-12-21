@@ -1,10 +1,12 @@
 ﻿using Aloop;
+using Lecture_23_10_2023_Alt.DB.Entity.GameAccounts;
 using OopLab.DB;
+using OopLab.DB.Entity;
 using OopLab.DB.Entity.Games;
 using OopLab.DB.Repositories;
 using OopLab.DB.Repositories.Base;
 using OopLab.Games;
-using OopLab.Services.Abstracts;
+using OopLab.Services.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +39,8 @@ namespace OopLab.Services
         }
         public Game GetById(int id)
         {
-            return Map(repository.GetById(id));
+            var game = Map(repository.GetById(id));
+            return game;
         }
         public void Update(Game entity)
         {
@@ -51,60 +54,47 @@ namespace OopLab.Services
                 Player1 = game.Player1,
                 Player2 = game.Player2,
                 PlayRating = game.playRating,
-
+                Indicator = game.Indicator,
             };
+
         }
         private Game Map(GameEntity game)
         {
-            return new Game(game.Player1, game.Player2, this)
-            {
-                Id = game.Id,
-                Player1 = game.Player1,
-                Player2 = game.Player2,
-                playRating = game.PlayRating,
-            };
-        }
-        private GameOnePlayerRatingEntity Map(GameOnePlayerRating game)
-        {
-            return new GameOnePlayerRatingEntity
-            {
-                Id = game.Id,
-                Player1 = game.Player1,
-                Player2 = game.Player2,
-                PlayRating = game.playRating,
 
-            };
-        }
-        private GameOnePlayerRating Map(GameOnePlayerRatingEntity game)
-        {
-            return new GameOnePlayerRating(game.Player1, game.Player2, this)
+            if (game.Indicator == 0)
             {
-                Id = game.Id,
-                Player1 = game.Player1,
-                Player2 = game.Player2,
-                playRating = game.PlayRating,
-            };
-        }
-        private GameWithoutRatingEntity Map(GameWithoutRating game)
-        {
-            return new GameWithoutRatingEntity
+                return new Game(game.Player1, game.Player2, this)
+                {
+                    Id = game.Id,
+                    Player1 = game.Player1,
+                    Player2 = game.Player2,
+                    playRating = game.PlayRating,
+                    Indicator = game.Indicator,
+                };
+            }
+            else if (game.Indicator == 1)
             {
-                Id = game.Id,
-                Player1 = game.Player1,
-                Player2 = game.Player2,
-                PlayRating = game.playRating,
+                return new GameOnePlayerRating(game.Player1, game.Player2, this)
+                {
+                    Id = game.Id,
+                    Player1 = game.Player1,
+                    Player2 = game.Player2,
+                    playRating = game.PlayRating,
+                    Indicator = game.Indicator,
+                };
+            }
+            else
+            {
+                return new GameWithoutRating(game.Player1, game.Player2, this)
+                {
+                    Id = game.Id,
+                    Player1 = game.Player1,
+                    Player2 = game.Player2,
+                    playRating = game.PlayRating,
+                    Indicator = game.Indicator,
+                };
+            }
+        }
 
-            };
-        }
-        private GameWithoutRating Map(GameWithoutRatingEntity game)
-        {
-            return new GameWithoutRating(game.Player1, game.Player2, this)
-            {
-                Id = game.Id,
-                Player1 = game.Player1,
-                Player2 = game.Player2,
-                playRating = game.PlayRating,
-            };
-        }
     }
 }
