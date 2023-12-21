@@ -42,17 +42,3 @@ C:\Users\kklop\Source\Repos\Laba3-OOP\OopLab\OopLab\bin\Debug\net6.0\OopLab.dll
 C:\Users\kklop\Source\Repos\Laba3-OOP\OopLab\OopLab\bin\Debug\net6.0\OopLab.pdb
 C:\Users\kklop\Source\Repos\Laba3-OOP\OopLab\OopLab\obj\Debug\net6.0\OopLab.genruntimeconfig.cache
 C:\Users\kklop\Source\Repos\Laba3-OOP\OopLab\OopLab\obj\Debug\net6.0\ref\OopLab.dll
-D:\oop\oop\3\OopLab\OopLab\bin\Debug\net6.0\OopLab.exe
-D:\oop\oop\3\OopLab\OopLab\bin\Debug\net6.0\OopLab.deps.json
-D:\oop\oop\3\OopLab\OopLab\bin\Debug\net6.0\OopLab.runtimeconfig.json
-D:\oop\oop\3\OopLab\OopLab\bin\Debug\net6.0\OopLab.dll
-D:\oop\oop\3\OopLab\OopLab\bin\Debug\net6.0\OopLab.pdb
-D:\oop\oop\3\OopLab\OopLab\obj\Debug\net6.0\OopLab.GeneratedMSBuildEditorConfig.editorconfig
-D:\oop\oop\3\OopLab\OopLab\obj\Debug\net6.0\OopLab.AssemblyInfoInputs.cache
-D:\oop\oop\3\OopLab\OopLab\obj\Debug\net6.0\OopLab.AssemblyInfo.cs
-D:\oop\oop\3\OopLab\OopLab\obj\Debug\net6.0\OopLab.csproj.CoreCompileInputs.cache
-D:\oop\oop\3\OopLab\OopLab\obj\Debug\net6.0\OopLab.dll
-D:\oop\oop\3\OopLab\OopLab\obj\Debug\net6.0\refint\OopLab.dll
-D:\oop\oop\3\OopLab\OopLab\obj\Debug\net6.0\OopLab.pdb
-D:\oop\oop\3\OopLab\OopLab\obj\Debug\net6.0\OopLab.genruntimeconfig.cache
-D:\oop\oop\3\OopLab\OopLab\obj\Debug\net6.0\ref\OopLab.dll
